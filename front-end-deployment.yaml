@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    application: front-end
+  name: front-end
+  namespace: sock-shop
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        application: front-end
+    spec:
+      containers:
+      - image: weaveworksdemos/front-end:0.3.12
+        name: front-end
+        ports:
+        - containerPort: 8079
+        resources: {}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8079
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8079
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 15
+      hostname: front-end
+      restartPolicy: Always
+status: {}
