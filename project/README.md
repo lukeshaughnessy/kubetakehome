@@ -1,1 +1,4 @@
 # kubetakehome
+I broke out the Services and Deployment into individual yaml files so as to not just "cargo cult" the whole file from the source repo into existance :). It only does the Catalog and the Front-end, not the Carts and user functions, so no Mongo or RabbitMQ or all of that. I added the Liveness and Readyness probes, and the Secret (for the SQLDB) is stored in Env using a K8s Secret. 
+I didn't get to the Basic HTTP auth for time reasons, but I assume it could be in an Nginx proxy in front of the Front-end, or maybe an Ingress, not sure since I've never tried that.
+The Volume didn't seem needed since the default database image appears to use memory, and I didn't hack the source for the base image to make it persist to a volume, but that would be possible by refactoring the docker build to mount a volume to store the DB files. 
